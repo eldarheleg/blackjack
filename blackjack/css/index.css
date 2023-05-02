@@ -21,3 +21,14 @@ h1 {
 p{
     font-size: 30px;
 }
+
+button{
+    color: #016f32;
+    background-color: #B8860B;
+    font-size: 20px;
+    font-weight: bold;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}

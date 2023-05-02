@@ -1,27 +1,56 @@
-// 1. Create two variables, firstCard and secondCard.
-// Set their values to a random number between 2-11
-
-// 2. Create a variable, sum, and set it to the sum of the two cards
-
-let firstCard = Math.floor(Math.random() * (11 - 2 + 1)) + 2
-let secondCard = Math.floor(Math.random() * (11 - 2 + 1)) + 2
-let isInGame = true
-console.log(firstCard)
-console.log(secondCard)
+let firstCard = getRandomNum();
+let secondCard = getRandomNum();
+let cards = [firstCard, secondCard];
+let titleMsg = document.getElementById("title-msg");
+let cardMsg = document.getElementById("card-msg");
+let sumMsg = document.getElementById("sum-msg");
+let sum = firstCard + secondCard;
+let endGame = false;
+let hasBlackjack = false;
 
 // if less than or equal to 20 -> "Do you want to draw a new card? 🙂"
 // else if exactly 21 -> "Wohoo! You've got Blackjack! 🥳"
 // else -> "You're out of the game! 😭"
 
-let sum = firstCard + secondCard + 5
-
-if (sum < 21) {
-    console.log("Do u want to draw a new card? ")
-} else if (sum === 21) {
-    console.log("Wohooo! You've got Blackjack!")
-} else {
-    console.log("You're out of the game")
-    isInGame = false
+function start() {
+  if (endGame != true) {
+    cardMsg.textContent = "Cards: ";
+    for (let i = 0; i <= cards.length - 1; i++) {
+      cardMsg.textContent += cards[i] + " ";
+    }
+    sumMsg.textContent = "Sum: " + sum;
+    if (sum < 21) {
+      titleMsg.textContent = "Do u want to draw a new card? ";
+    } else if (sum === 21) {
+      titleMsg.textContent = "Wohooo! You've got Blackjack!";
+      endGame = true;
+      hasBlackjack = true
+    } else {
+      titleMsg.textContent = "You're out of the game";
+      endGame = true;
+    }
+  } else {
+    titleMsg.textContent = "Wanna play a round?";
+    cardMsg.textContent = "Cards: ";
+    sumMsg.textContent = "Sum: ";
+    endGame = false;
+    firstCard = getRandomNum();
+    secondCard = getRandomNum();
+    sum = firstCard + secondCard;
+    cards = [firstCard, secondCard];
+  }
 }
 
-console.log(isInGame)
+function pull() {
+  if (endGame != true && hasBlackjack != true) {
+    let newNumber = getRandomNum();
+    sum += newNumber;
+    cards.push(newNumber);
+    start();
+  }
+}
+
+function getRandomNum() {
+  let number = Math.floor(Math.random() * 13) + 1;
+  return number;
+}
